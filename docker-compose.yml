@@ -1,0 +1,37 @@
+version: "3.4"
+services:
+  db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ask_db_data:/var/lib/postgresql
+      - ./db/init.sh:/docker-entrypoint-initdb.d/init.sh
+    environment:
+      - POSTGRES_DB=ask
+      - POSTGRES_USER=ask
+      - POSTGRES_PASSWORD=ask
+    networks:
+      - ask-network
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3001:3000
+    volumes:
+      - ask_grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD:ask
+    networks:
+      - ask-network
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8090:8080
+    networks:
+      - ask-network
+networks: 
+  ask-network:
+volumes:
+  ask_db_data:
+  ask_grafana_data:
