@@ -1,0 +1,5 @@
+Faker
+psycopg2
+click
+tqdm
+influxdb
