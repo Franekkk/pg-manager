@@ -2,6 +2,7 @@ version: "3.4"
 services:
   monitoring:
     build: .
+    command: python collect-metrics
     depends_on:
       - db
       - influxdb
@@ -39,6 +40,7 @@ services:
       - 3001:3000
     volumes:
       - ask_grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
     environment:
       - GF_SECURITY_ADMIN_PASSWORD:ask
     networks:
